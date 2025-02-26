@@ -31,7 +31,7 @@ func termSize() (int, int) {
     size, _ := cmd.Output()
 
     termWidth, _ := strconv.Atoi(strings.TrimSpace(strings.Split(string(size), " ")[1]))
-    termHeight, _ := strconv.Atoi(strings.Split(string(size), " ")[0])
+    termHeight, _ := strconv.Atoi(strings.TrimSpace(strings.Split(string(size), " ")[0]))
     return termWidth, termHeight
 }
 
@@ -79,6 +79,10 @@ func main() {
     minCol := 0
     maxCol := len(frames[0][0])
 
+    if maxRow > termHeight {
+        minRow = (maxRow - termHeight) / 2
+        maxRow = minRow + termHeight
+    }
     if maxRow > termHeight {
         minRow = (maxRow - termHeight) / 2
         maxRow = minRow + termHeight
